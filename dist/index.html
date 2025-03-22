@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoneResults - AI-Powered Cold Email Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Inline critical CSS to ensure animations work immediately */
+    .hero-heading-part {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    
+    .glitch-active::before,
+    .glitch-active::after {
+      opacity: 1;
+    }
+    
+    .hero-content p {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .cta-button {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .feature-card-wrapper.active .glowing-effect {
+      opacity: 1;
+    }
+
+    /* Glitch animation styles */
+    .glitch-active::before,
+    .glitch-active::after {
+      opacity: 1;
+    }
+    
+    .glitch-active-alt::before,
+    .glitch-active-alt::after {
+      opacity: 1;
+    }
+    
+    .glitch-active-alt::before {
+      animation: glitch-anim-1 0.4s linear alternate-reverse;
+      text-shadow: -2px 0 var(--dark-aqua);
+    }
+    
+    .glitch-active-alt::after {
+      animation: glitch-anim-2 0.4s linear alternate-reverse;
+      text-shadow: 2px 0 var(--light-aqua);
+    }
+
+    /* Timeline styles */
+    .timeline-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    .timeline-line {
+      position: absolute;
+      width: 4px;
+      background-color: var(--dark-aqua);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      width: 50%;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+
+    .timeline-content {
+      padding: 20px 30px;
+      background-color: white;
+      position: relative;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .timeline-content h3 {
+      margin-top: 0;
+      color: var(--dark-aqua);
+    }
+
+    .timeline-content::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      top: 20px;
+      border: 4px solid var(--dark-aqua);
+      z-index: 1;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::after {
+      right: -50px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::after {
+      left: -50px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline-line {
+        left: 40px;
+      }
+      
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 20px;
+      }
+      
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-content::after,
+      .timeline-item:nth-child(even) .timeline-content::after {
+        left: -50px;
+      }
+    }
+  </style>
+  <script>
+    // Inline critical JavaScript to ensure animations work immediately
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hero Section Animations
+      const heroHeadingPart1 = document.querySelector('.hero-heading-part.part-1');
+      const heroHeadingPart2 = document.querySelector('.hero-heading-part.part-2');
+      const heroHeadingPart3 = document.querySelector('.hero-heading-part.part-3');
+      const heroSubheadline = document.querySelector('.hero-subheadline');
+      const ctaButton = document.querySelector('.hero-content .cta-button');
+      
+      // Sequential animation for hero heading parts
+      function animateHeroHeading() {
+        // First part: "Want More Clients?"
+        setTimeout(() => {
+          if (heroHeadingPart1) {
+            heroHeadingPart1.style.opacity = '1';
+            heroHeadingPart1.style.transform = 'translateY(0)';
+            
+            // Trigger glitch effect
+            heroHeadingPart1.classList.add('glitch-active');
+            setTimeout(() => {
+              if (heroHeadingPart1) {
+                heroHeadingPart1.classList.remove('glitch-active');
+              }
+            }, 300);
+          }
+        }, 100);
+        
+        // Second part: "Guaranteed"
+        setTimeout(() => {
+          if (heroHeadingPart2) {
+            heroHeadingPart2.style.opacity = '1';
+            heroHeadingPart2.style.transform = 'translateY(0)';
+            
+            // Trigger glitch effect
+            heroHeadingPart2.classList.add('glitch-active');
+            setTimeout(() => {
+              if (heroHeadingPart2) {
+                heroHeadingPart2.classList.remove('glitch-active');
+              }
+            }, 300);
+          }
+        }, 500);
+        
+        // Third part: "—Or You Don't Pay."
+        setTimeout(() => {
+          if (heroHeadingPart3) {
+            heroHeadingPart3.style.opacity = '1';
+            heroHeadingPart3.style.transform = 'translateY(0)';
+            
+            // Trigger glitch effect with different animation
+            heroHeadingPart3.classList.add('glitch-active-alt');
+            setTimeout(() => {
+              if (heroHeadingPart3) {
+                heroHeadingPart3.classList.remove('glitch-active-alt');
+              }
+            }, 400);
+          }
+        }, 900);
+        
+        // Subheadline: fade in slowly
+        setTimeout(() => {
+          if (heroSubheadline) {
+            heroSubheadline.style.opacity = '1';
+            heroSubheadline.style.transform = 'translateY(0)';
+          }
+        }, 1300);
+        
+        // CTA Button: fade in
+        setTimeout(() => {
+          if (ctaButton) {
+            ctaButton.style.opacity = '1';
+            ctaButton.style.transform = 'translateY(0)';
+          }
+        }, 1700);
+      }
+      
+      // Start the hero animations immediately
+      animateHeroHeading();
+
+      // Timeline animation
+      function animateTimelineItems() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        
+        timelineItems.forEach(item => {
+          observer.observe(item);
+        });
+      }
+      
+      // Initialize timeline animation
+      animateTimelineItems();
+      
+      // FAQ Accordion
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        if (question) {
+          question.addEventListener('click', () => {
+            // Close all other items
+            faqItems.forEach(otherItem => {
+              if (otherItem !== item && otherItem.classList.contains('active')) {
+                otherItem.classList.remove('active');
+              }
+            });
+            
+            // Toggle current item
+            item.classList.toggle('active');
+          });
+        }
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="/assets/index-be1b3a5e.css">
+</head>
+<body>
+  <header id="main-header">
+    <div class="container">
+      <div class="logo">
+        <img src="https://i.imgur.com/jbOMOyH.png" alt="DoneResults Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#what-we-do">What We Do</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#guarantee">Guarantee</a></li>
+          <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 1. HERO SECTION -->
+  <section id="hero">
+    <div class="hero-background">
+      <div class="hero-dots"></div>
+      <div class="hero-dots-highlight"></div>
+      <div class="hero-dots-fade"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>
+          <span class="hero-heading-part part-1 glitch" data-text="Want More Clients?">Want More Clients?</span> 
+          <span class="hero-heading-part part-2 highlight-guaranteed glitch" data-text="Guaranteed">Guaranteed</span>
+          <span class="hero-heading-part part-3 highlight-container">—<span class="highlight-pay glitch" data-text="Or You Don't Pay.">Or You Don't Pay.</span></span>
+        </h1>
+        <p class="hero-subheadline">We leverage AI-powered cold email to deliver warm, high-intent leads. If we fail, you don't pay.</p>
+        <a href="#contact" class="cta-button">Book a Free Strategy Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. WHAT WE DO & WHY IT BENEFITS YOU -->
+  <section id="what-we-do">
+    <div class="container">
+      <div class="two-column">
+        <div class="column-left">
+          <h2>We Do the Outreach—You Close the Deals</h2>
+          <p>We'll define your ideal clients together and reach out to them using our advanced AI system. Whenever a prospect shows genuine interest, we schedule a warm meeting on your calendar—so you can focus on closing deals, not prospecting.</p>
+        </div>
+        <div class="column-right">
+          <div class="illustration">
+            <img src="/assets/ai-outreach-df8064be.svg" alt="AI Outreach Illustration">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PROOF & DATA -->
+  <section id="results">
+    <div class="container">
+      <h2>Real Results & Proof</h2>
+      <p class="section-intro left-aligned">Our campaigns typically see 3–10% reply rates, with around 40% of those replies being positive. We can send hundreds or even thousands of emails a day, creating a steady flow of opportunities. How many will you close?</p>
+      
+      <div class="results-grid">
+        <div class="result-card">
+          <img src="/assets/result-1-07395989.svg" alt="Campaign Results">
+          <h3>8.5% Reply Rate</h3>
+          <p>Agency client campaign</p>
+        </div>
+        <div class="result-card">
+          <img src="/assets/result-2-fbb84a04.svg" alt="Campaign Results">
+          <h3>42% Positive Replies</h3>
+          <p>SaaS client campaign</p>
+        </div>
+        <div class="result-card">
+          <img src="/assets/result-3-f9c0ebdd.svg" alt="Campaign Results">
+          <h3>10+ Meetings/Week</h3>
+          <p>Consistent results for B2B service</p>
+        </div>
+        <div class="result-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            <path d="M8 10h.01"></path>
+            <path d="M12 10h.01"></path>
+            <path d="M16 10h.01"></path>
+          </svg>
+          <h3>100s-1000s Emails</h3>
+          <p>Sent daily to your ideal prospects</p>
+        </div>
+      </div>
+      
+      <p class="highlight-stat">In one campaign, we booked 10+ meetings/week—imagine the potential once we dial everything in.</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE SECTION -->
+  <section id="timeline">
+    <div class="container">
+      <h2>Our Journey to Perfecting Cold Email</h2>
+      <p class="section-subtitle">We've spent years refining our approach to deliver consistent results.</p>
+      
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>2020: The Beginning</h3>
+            <p>Started experimenting with cold email for our own agency. Initial results were disappointing with less than 1% reply rates.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>2021: Breakthrough</h3>
+            <p>After hundreds of tests, we developed a framework that consistently generated 5%+ reply rates and started booking meetings regularly.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>2022: AI Integration</h3>
+            <p>Incorporated advanced AI tools to personalize outreach at scale, doubling our effectiveness while maintaining authenticity.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>2023: Client Success</h3>
+            <p>Expanded our service to help other businesses, achieving 3.2x ROI for clients across multiple industries.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Today: Guaranteed Results</h3>
+            <p>Confident in our system, we now offer a guarantee: if we don't deliver qualified meetings, you don't pay our service fee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WE FAILED (A LOT) & PERSONAL NOTE FROM JAN -->
+  <section id="personal-note">
+    <div class="container">
+      <div class="two-column">
+        <div class="column-left">
+          <img src="https://i.imgur.com/JkASEy2.jpeg" alt="Jan, Founder of DoneResults" class="founder-photo">
+        </div>
+        <div class="column-right">
+          <h2>We Failed (a Lot)—So You Don't Have To</h2>
+          <p>I'm Jan, founder of DoneResults. I tested countless cold email strategies—most flopped—until I finally cracked the code. This worked so well for my video marketing agency that I had to hire more people just to handle the lead flow. Now, I'd love to share that same system with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. WHAT MAKES US DIFFERENT -->
+  <section id="differentiators">
+    <div class="container">
+      <h2>What Makes DoneResults Different</h2>
+      <p class="section-subtitle">Our unique approach combines cutting-edge AI technology with proven outreach strategies.</p>
+      
+      <div class="features-grid" id="features-container">
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gauge">
+                <path d="m12 14 4-4"></path>
+                <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
+              </svg>
+            </div>
+            <h3>Adaptable Speed & Scale</h3>
+            <p>We tailor outreach volume to match your capacity.</p>
+          </div>
+        </div>
+        
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+              </svg>
+            </div>
+            <h3>Dedicated Subdomains</h3>
+            <p>Protect your main domain's reputation and maximize deliverability.</p>
+          </div>
+        </div>
+        
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot">
+                <path d="M12 8V4H8"></path>
+                <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M15 13v2"></path>
+                <path d="M9 13v2"></path>
+              </svg>
+            </div>
+            <h3>AI-Powered Personalization</h3>
+            <p>No spammy templates; every email is custom-crafted.</p>
+          </div>
+        </div>
+        
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-more">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="M12 7v.01"></path>
+                <path d="M16 7v.01"></path>
+                <path d="M8 7v.01"></path>
+              </svg>
+            </div>
+            <h3>Multi-Step Follow-Ups</h3>
+            <p>80% of conversions happen after the first email.</p>
+          </div>
+        </div>
+        
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2 .5 3 .3.5.7 1.2 1.5 2 .8.8 1.3 1.5 1.5 2.5"></path>
+                <path d="M9 18h6"></path>
+                <path d="M10 22h4"></path>
+              </svg>
+            </div>
+            <h3>Always Testing New AI Tools</h3>
+            <p>We stay on the cutting edge for cost-efficiency and performance.</p>
+          </div>
+        </div>
+        
+        <div class="feature-card-wrapper">
+          <div class="glowing-effect"></div>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A79D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2">
+                <line x1="18" x2="18" y1="20" y2="10"></line>
+                <line x1="12" x2="12" y1="20" y2="4"></line>
+                <line x1="6" x2="6" y1="20" y2="14"></line>
+              </svg>
+            </div>
+            <h3>Transparent Reporting</h3>
+            <p>Weekly updates on the performance of our campaigns.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 3-STEP PROCESS -->
+  <section id="process">
+    <div class="container">
+      <h2>Our Simple 3-Step Process</h2>
+      
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Discovery & ICP</h3>
+          <p>We learn about your business and define your ideal client.</p>
+        </div>
+        
+        <div class="step-connector"></div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>AI-Powered Outreach</h3>
+          <p>We craft & send personalized emails, set up subdomains, and ensure deliverability.</p>
+        </div>
+        
+        <div class="step-connector"></div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Meetings on Your Calendar</h3>
+          <p>We book calls via Google Meet; you close the deals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. GUARANTEE -->
+  <section id="guarantee">
+    <div class="container">
+      <h2>Guaranteed Meetings. Or You Don't Pay.</h2>
+      <p>We're so confident in our ability to book you warm, high-intent leads that if we ever fail, you only cover system fees—nothing more.</p>
+    </div>
+  </section>
+
+  <!-- 9. FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How soon until I see results?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Most clients start seeing replies within the first week of launching a campaign. However, it typically takes 2-3 weeks to fully optimize and start booking consistent meetings.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Does this work for any industry?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We've had success across B2B industries including SaaS, agencies, professional services, and consulting. Some industries have specific regulations around cold outreach, which we'll discuss during our strategy call.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Seriously, no results = no pay?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we're that confident. If we don't deliver the agreed-upon number of qualified meetings, you only pay for the basic system costs—not our service fee.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What if I'm new to cold email?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Perfect! We handle everything from setup to execution. You don't need any prior experience with cold email—just be ready to take the meetings we book for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. FINAL CTA -->
+  <section id="contact">
+    <div class="container">
+      <h2>Ready to Fill Your Calendar with Quality Leads?</h2>
+      <a href="#" class="cta-button">Book Your Free Strategy Call</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="https://i.imgur.com/sU9B6mK.png" alt="DoneResults Logo">
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-copyright">
+          &copy; 2023 DoneResults. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Additional JavaScript for feature card effects and other interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mouse-following dotted background for hero section
+      const hero = document.getElementById('hero');
+      const heroDots = document.querySelector('.hero-dots-highlight');
+      
+      // Track mouse position
+      let mouseX = 0;
+      let mouseY = 0;
+      
+      // Function to handle mouse movement in hero section
+      function handleHeroMouseMove(e) {
+        if (hero && heroDots) {
+          const rect = hero.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+          
+          // Set CSS variables for the mask position
+          heroDots.style.setProperty('--mouse-x', `${mouseX}px`);
+          heroDots.style.setProperty('--mouse-y', `${mouseY}px`);
+          
+          // Show the effect
+          heroDots.style.opacity = '1';
+        }
+      }
+      
+      // Add mouse move event listener to the hero section
+      if (hero && heroDots) {
+        hero.addEventListener('mousemove', handleHeroMouseMove);
+        
+        // Hide the effect when mouse leaves
+        hero.addEventListener('mouseleave', () => {
+          if (heroDots) {
+            heroDots.style.opacity = '0';
+          }
+        });
+      }
+      
+      // Fade out dots at the bottom of hero section
+      <boltAction type="file" filePath="index.html">
+      function updateDotsFade() {
+        if (hero) {
+          const heroRect = hero.getBoundingClientRect();
+          const scrollPosition = window.scrollY;
+          
+          // Calculate how far we've scrolled into the hero section
+          const scrollPercentage = Math.min(1, scrollPosition / (heroRect.height * 0.5));
+          
+          // Update the opacity of the dots based on scroll position
+          const dotsFade = document.querySelector('.hero-dots-fade');
+          if (dotsFade) {
+            dotsFade.style.opacity = Math.min(1, scrollPercentage * 2);
+          }
+        }
+      }
+      
+      // Update dots fade on scroll
+      window.addEventListener('scroll', updateDotsFade);
+      
+      // Header visibility on scroll
+      const header = document.getElementById('main-header');
+      let lastScrollTop = 0;
+      
+      window.addEventListener('scroll', () => {
+        if (header) {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          
+          if (scrollTop > 50) {
+            header.classList.add('visible');
+          } else {
+            header.classList.remove('visible');
+          }
+          
+          lastScrollTop = scrollTop;
+        }
+      });
+
+      // Mouse-following Glowing Effect for Feature Cards
+      const featuresContainer = document.getElementById('features-container');
+      const featureCards = document.querySelectorAll('.feature-card-wrapper');
+      
+      // Track mouse position
+      let featureMouseX = 0;
+      let featureMouseY = 0;
+      
+      // Animation frame request ID
+      let animationFrameId = null;
+      
+      // Function to handle mouse movement
+      function handleMouseMove(e) {
+        featureMouseX = e.clientX;
+        featureMouseY = e.clientY;
+        
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+        
+        animationFrameId = requestAnimationFrame(updateGlowingEffects);
+      }
+      
+      // Function to update glowing effects based on mouse position
+      function updateGlowingEffects() {
+        featureCards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const glowingEffect = card.querySelector('.glowing-effect');
+          
+          if (!glowingEffect) return;
+          
+          // Calculate center of the card
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Calculate distance from mouse to center
+          const distanceFromCenter = Math.hypot(featureMouseX - centerX, featureMouseY - centerY);
+          const inactiveRadius = 0.5 * Math.min(rect.width, rect.height) * 0.01; // Default value if CSS var not available
+          
+          // Check if mouse is within inactive zone
+          if (distanceFromCenter < inactiveRadius) {
+            card.classList.remove('active');
+            return;
+          }
+          
+          // Check if mouse is within proximity (default to 64px if CSS var not available)
+          const proximity = 64;
+          const isActive = 
+            featureMouseX > rect.left - proximity &&
+            featureMouseX < rect.left + rect.width + proximity &&
+            featureMouseY > rect.top - proximity &&
+            featureMouseY < rect.top + rect.height + proximity;
+          
+          if (isActive) {
+            card.classList.add('active');
+            
+            // Calculate angle from center to mouse
+            const angle = Math.atan2(featureMouseY - centerY, featureMouseX - centerX) * (180 / Math.PI) + 90;
+            
+            // Set the start angle for the mask
+            glowingEffect.style.setProperty('--start', angle.toString());
+          } else {
+            card.classList.remove('active');
+          }
+        });
+      }
+      
+      // Add mouse move event listener to the document for feature cards
+      document.addEventListener('mousemove', handleMouseMove);
+      
+      // Initialize the dots fade effect
+      updateDotsFade();
+      
+      // Clean up on page unload
+      window.addEventListener('beforeunload', () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+        document.removeEventListener('mousemove', handleMouseMove);
+        if (hero) {
+          hero.removeEventListener('mousemove', handleHeroMouseMove);
+        }
+        window.removeEventListener('scroll', updateDotsFade);
+      });
+    });
+  </script>
+</body>
+</html>
